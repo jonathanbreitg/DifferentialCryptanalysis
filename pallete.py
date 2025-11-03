@@ -1,0 +1,32 @@
+# Catppuccin Mocha Palette
+
+MANTLE   = "#181825"
+CRUST    = "#11111b"
+BASE     = "#1e1e2e"
+TEXT     = "#cdd6f4"
+
+ROSEWATER = "#f5e0dc"
+FLAMINGO  = "#f2cdcd"
+PINK      = "#f5c2e7"
+MAUVE     = "#cba6f7"
+RED       = "#f38ba8"
+
+MAROON    = "#eba0ac"
+PEACH     = "#fab387"
+YELLOW    = "#f9e2af"
+GREEN     = "#a6e3a1"
+
+TEAL      = "#94e2d5"
+SKY       = "#89dceb"
+SAPPHIRE  = "#74c7ec"
+BLUE      = "#89b4fa"
+LAVENDER  = "#b4befe"
+
+SUBTEXT0  = "#a6adc8"
+SUBTEXT1  = "#bac2de"
+OVERLAY0  = "#6c7086"
+OVERLAY1  = "#7f849c"
+SURFACE0  = "#313244"
+
+SURFACE1  = "#45475a"
+SURFACE2  = "#585b70"
