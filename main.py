@@ -1099,6 +1099,63 @@ class EvenMansourConstruction(Scene):
         self.wait()
 
 
+class ConfusionDiffusion(Scene):
+    def construct(self):
+        buffy= 0.25/2
+        image = ImageMobject("shannon.png")
+        image.set(width=4)
+        image.to_edge(LEFT)
+
+        title = title = Title(f"Confusion \& Diffusion",font_size=50).set_color_by_gradient(BLUE,RED)
+        self.play(Write(title))
+        self.wait()
+
+        self.play(FadeIn(image))
+        self.wait()
+
+        self.play(FadeOut(image))
+        self.wait()
+
+        Enc =  VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(TEXT,3),MathTex(r"{{Enc}}_{K}").set_color(TEXT).scale(1.25))
+        colorize(Enc[1])
+        Enc[1].set_color_by_tex("Enc",RED)
+        
+        msg = MathTex(r"{{m}}").set_color(TEAL).scale(1.25).next_to(Enc,UP,buff=1)
+        self.play(Write(Enc),Write(msg))
+        self.wait()
+
+        arr = Arrow(msg.get_bottom(),Enc.get_top(),buff=buffy).set_color(TEAL)
+        self.play(Write(arr))
+        self.wait()
+
+        output = MathTex(r"{{z}}").scale(1.25).set_color(PEACH).next_to(Enc,DOWN,buff=1)
+        arr2 = Arrow(Enc.get_bottom(),output.get_top(),buff=buffy).set_color(PEACH)
+
+        self.play(Write(arr2),Write(output))
+        self.wait()
+
+        mBits = Tex(r"0110 1110 0100 1101").set_color(TEAL).scale(1.25).move_to(msg)
+        self.play(ReplacementTransform(msg,mBits))
+        self.wait()
+
+        zBits = Tex(r"1010 1000 1101 0000").set_color(PEACH).scale(1.25).move_to(output)
+        self.play(Transform(output,zBits))
+        self.wait()
+
+        arrBit = Arrow(mBits[0][-2].get_top()+UP+RIGHT,mBits[0][-2].get_top(),buff=buffy)
+        self.play(Write(arrBit))
+        self.wait()
+
+        bitFlipped = Tex("0110 1110 0100 1111").set_color(RED).scale(1.25).move_to(mBits)
+        bitFlipped[0][-2].set_color(RED)
+        self.play(Transform(mBits[0][-2],bitFlipped[0][-2]))
+        self.wait()
+
+        for out_bit in zBits[0]:
+            self.play(Write(Line(mBits[0][-2].get_bottom(),out_bit.get_top())))
+        self.wait()
+
+
 class differentialTrails(Scene):
     def construct(self):
         buffy = 0.6
