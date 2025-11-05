@@ -835,7 +835,7 @@ class reversibility(Scene):
         self.play(Write(out2),Write(arr7))
         self.wait()
 
-        self.play(xor_leftLabel.animate.set_opacity(0.3))
+        self.play(xor_leftLabel.animate.set_opacity(0.4))
         outGroup = VGroup(arr7,out2,xorbox2_group,xor_leftLabel,xor_leftLine)
         labelXor = MathTex(r"{{M}} \oplus {{K}}").set_color(TEXT).scale(1.5).next_to(sbox_inv, UP, buff=buffy)
         colorize(labelXor)
@@ -896,7 +896,7 @@ class EvenMansourConstruction(Scene):
         M = MathTex(r"{{M}}").set_color(TEAL).scale(1.5).to_edge(LEFT,buff=0.5).shift(UP*1.5)
         self.play(Write(M))
         self.wait()
-        xor1 = VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(TEXT,3),MathTex(r"\oplus {{K_1}}").set_color(TEXT).scale(1.25)).next_to(M, RIGHT, buff=1.5)
+        xor1 = VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(TEXT,3),MathTex(r"\oplus {{K}}_1").set_color(TEXT).scale(1.25)).next_to(M, RIGHT, buff=1.5)
         colorize(xor1[1])
         arr1 = Arrow(start=M.get_right(), end=xor1.get_left(), buff=0.1/2, color=TEAL)
         self.play(Write(xor1),Write(arr1))
@@ -918,7 +918,7 @@ class EvenMansourConstruction(Scene):
 
 
 
-        xor2 = VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(TEXT,3),MathTex(r"\oplus {{K_2}}").set_color(TEXT).scale(1.25)).next_to(Fbox, RIGHT, buff=1.5)
+        xor2 = VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(TEXT,3),MathTex(r"\oplus {{K}}_2").set_color(TEXT).scale(1.25)).next_to(Fbox, RIGHT, buff=1.5)
         colorize(xor2[1])
         arr3 = Arrow(start=Fbox.get_right(), end=xor2.get_left(), buff=0.1/2, color=ORANGE)
         self.play(Write(xor2),Write(arr3))
@@ -938,8 +938,8 @@ class EvenMansourConstruction(Scene):
 
         network = VGroup(M,arr1,xor1,arr2,Fbox_group,arr3,xor2,arr4,Z,V,W)
         
-        pair1 = MathTex(r"({{M_1}},{{Z_1}})").set_color(ROSEWATER).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).scale(1.5).to_edge(LEFT).shift(DOWN*1)
-        pair2 = MathTex(r"({{M_2}},{{Z_2}})").set_color(ROSEWATER).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).scale(1.5).next_to(pair1, DOWN, buff=0.25)
+        pair1 = MathTex(r"({{M}}_1,{{Z}}_1)").set_color(ROSEWATER).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).scale(1.5).to_edge(LEFT).shift(DOWN*1)
+        pair2 = MathTex(r"({{M}}_2,{{Z}}_2)").set_color(ROSEWATER).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).scale(1.5).next_to(pair1, DOWN, buff=0.25)
         rec= SurroundingRectangle(VGroup(pair1,pair2),color=MAUVE,stroke_width=3,buff=0.3)
         label = MathTex(r"Known:").set_color(MAUVE).next_to(rec, UP, buff=0.1)
         self.play(Write(pair1))
@@ -952,18 +952,16 @@ class EvenMansourConstruction(Scene):
         self.play(Write(label))
         self.wait()
 
-        K1bitstring = MathTex(r"{{K_1}} =", "{{0101\ldots1010}}").set_color(ROSEWATER).set_color_by_tex("K",BLUE).scale(1.5).to_edge(RIGHT).shift(DOWN)
+        K1bitstring = MathTex(r"{{K}}_1 =", "{{0101\ldots1010}}").set_color(ROSEWATER).set_color_by_tex("K",BLUE).scale(1.5).to_edge(RIGHT).shift(DOWN)
         brace = Brace(K1bitstring[2], direction=UP, buff=0.3, stroke_color=BLUE).set_color(BLUE)
         braceText = MathTex(r"{{n}}-bits").set_color(ROSEWATER).set_color_by_tex("n",BLUE).next_to(brace, UP, buff=0.1)
-        self.play(Write(K1bitstring))
+        K2bitstring = MathTex(r"{{K}}_2 =" ,"1010\ldots0101").set_color(ROSEWATER).set_color_by_tex("K",BLUE).scale(1.5).next_to(K1bitstring, DOWN, buff=0.25)
+        self.play(Write(K1bitstring),Write(K2bitstring))
         self.wait()
 
         self.play(Write(brace), Write(braceText))
         self.wait()
 
-        K2bitstring = MathTex(r"{{K_2}} =" ,"1010\ldots0101").set_color(ROSEWATER).set_color_by_tex("K",BLUE).scale(1.5).next_to(K1bitstring, DOWN, buff=0.25)
-        self.play(Write(K2bitstring))
-        self.wait()
 
         self.play(FadeOut(VGroup(K1bitstring,brace,braceText,K2bitstring)))
         self.wait()
@@ -980,22 +978,22 @@ class EvenMansourConstruction(Scene):
         self.play(FadeOut(VGroup(twoN,oneN,arrow)))
         self.wait()
 
-        title = Title(f"Even-Mansour Construction Known-plaintext attack",font_size=50).set_color_by_gradient(BLUE,RED)
+        title = Title(f"Even-Mansour Differential Known-plaintext attack",font_size=50).set_color_by_gradient(BLUE,RED)
         self.play(Write(title))
         self.wait()
 
         self.play(FadeOut(title))
         self.wait()
 
-        eq1 = MathTex(r"{{\Delta_M}}={{M_1}} {{\oplus}} {{M_2}}").set_color(ROSEWATER).set_color_by_tex("\oplus",RED).set_color_by_tex("M",TEAL).scale(1.5).to_edge(RIGHT,buff=0.5)
+        eq1 = MathTex(r"{{\Delta_M}}={{M}}_1 {{\oplus}} {{M}}_1").set_color(ROSEWATER).set_color_by_tex("\oplus",RED).set_color_by_tex("M",TEAL).scale(1.5).to_edge(RIGHT,buff=0.5)
         self.play(Write(eq1))
         self.wait()
 
-        eq2 = MathTex(r"{{\Delta_Z}}={{Z_1}} {{\oplus}} {{Z_2}}").set_color(ROSEWATER).set_color_by_tex("\oplus",RED).set_color_by_tex("Z",RED).scale(1.5).next_to(eq1, DOWN, buff=0.25)
+        eq2 = MathTex(r"{{\Delta_Z}}={{Z}}_2 {{\oplus}} {{Z}}_2").set_color(ROSEWATER).set_color_by_tex("\oplus",RED).set_color_by_tex("Z",RED).scale(1.5).next_to(eq1, DOWN, buff=0.25)
         self.play(Write(eq2))
         self.wait()
 
-        eq3 = MathTex(r"{{\Delta_Z}}={{\Delta_W}}").set_color(ROSEWATER).set_color_by_tex("Z",RED).set_color_by_tex("W",RED).set_color_by_tex("F",PEACH).set_color_by_tex("V",GREEN).set_color_by_tex("M",TEAL).scale(1.5).next_to(eq2, DOWN, buff=0.25)
+        eq3 = MathTex(r"{{\Delta_Z}}={{\Delta_W}}").set_color(ROSEWATER).set_color_by_tex("Z",RED).set_color_by_tex("W",ORANGE).set_color_by_tex("F",PEACH).set_color_by_tex("V",GREEN).set_color_by_tex("M",TEAL).scale(1.5).next_to(eq2, DOWN, buff=0.25)
         self.play(Write(eq3))
         self.wait()
 
@@ -1003,7 +1001,7 @@ class EvenMansourConstruction(Scene):
         self.play(Write(eq4))
         self.wait()
 
-        known3 = MathTex(r"{{\Delta_M}},{{\Delta_Z}},{{\Delta_W}}").set_color(ROSEWATER).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).set_color_by_tex("W",RED).scale(1.5).next_to(pair2,DOWN,buff=0.25).to_edge(LEFT)
+        known3 = MathTex(r"{{\Delta_M}},{{\Delta_Z}}={{\Delta_W}}").set_color(ROSEWATER).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).set_color_by_tex("W",ORANGE).scale(1.5).next_to(pair2,DOWN,buff=0.25).to_edge(LEFT)
         rec2 = SurroundingRectangle(VGroup(pair1,pair2,known3),color=MAUVE,stroke_width=3,buff=0.3)
 
         self.play(Write(known3),Transform(rec,rec2),label.animate.next_to(rec2, UP, buff=0.1))
@@ -1012,33 +1010,72 @@ class EvenMansourConstruction(Scene):
         self.play(FadeOut(VGroup(eq1,eq2)))
         self.wait()
 
-        idea1 = MathTex(r"Generate \, all:({{V'}},{{V'}} {{\oplus}} {{\Delta_M}})").set_color(ROSEWATER).set_color_by_tex("V",GREEN).set_color_by_tex("M",TEAL).set_color_by_tex("\oplus",RED).scale(1.3).shift(UP*1.75+RIGHT*2.25)
+        idea1 = MathTex(r"Generate \, all:({{V'}},{{V'}} {{\oplus}} {{\Delta_M}})").set_color(ROSEWATER).set_color_by_tex("V",GREEN).set_color_by_tex("M",TEAL).set_color_by_tex("\oplus",RED).scale(1.3).shift(UP*1.75+RIGHT*2.8)
         self.play(Write(idea1),network.animate.to_edge(UP,buff=0.2))
         self.wait()
 
-        idea2 = MathTex(r"{{F}}({{V'}}) {{\oplus}} {{F}}({{V'}} {{\oplus}} {{\Delta_M}}) \stackrel{?}{=} {{\Delta_W}}").set_color(ROSEWATER).set_color_by_tex("F",PEACH).set_color_by_tex("V",GREEN).set_color_by_tex("M",TEAL).set_color_by_tex("W",RED).set_color_by_tex("\oplus",RED).scale(1.3).next_to(idea1, DOWN, buff=0.2)
-        surr = SurroundingRectangle(VGroup(idea1,idea2),color=RED,stroke_width=3,buff=0.2)
+        idea2 = MathTex(r"{{F}}({{V'}}) {{\oplus}} {{F}}({{V'}} {{\oplus}} {{\Delta_M}}) \stackrel{?}{=} {{\Delta_Z}}").set_color(ROSEWATER).set_color_by_tex("F",PEACH).set_color_by_tex("V",GREEN).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).set_color_by_tex("\oplus",RED).scale(1.3).next_to(idea1, DOWN, buff=0.2)
+        surr = SurroundingRectangle(VGroup(idea1,idea2),color=RED,stroke_width=3,buff=0.1)
         self.play(Write(idea2),Write(surr))
+        self.wait()
+
+        idea3 = MathTex(r"{{E}}_{{K}}({{M}}_2) \stackrel{?}{=} {{Z}}_2 {{\land}} \ldots").set_color(ROSEWATER).set_color_by_tex("E",RED).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).set_color_by_tex("K",BLUE).scale(1.3).next_to(idea2, DOWN, buff=0.2)
+        surr2 = SurroundingRectangle(VGroup(idea1,idea2,idea3),color=RED,stroke_width=3,buff=0.1)
+        self.play(Write(idea3),Transform(surr,surr2))
         self.wait()
 
         #/*SHOW CODE*/
 
-        idea3 = MathTex(r"{{E}}_{{K}}({{M_2}}) \stackrel{?}{=} {{Z_2}} {{\land}} \ldots").set_color(ROSEWATER).set_color_by_tex("E",ORANGE).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).set_color_by_tex("K",BLUE).scale(1.3).next_to(idea2, DOWN, buff=0.2)
-        surr2 = SurroundingRectangle(VGroup(idea1,idea2,idea3),color=RED,stroke_width=3,buff=0.2)
-        self.play(Write(idea3),Transform(surr,surr2))
+        #/*There are different attacks, specifically the slidex attack which is based on the slide with a twist attack,TODO EXPLAIN?*/
+
+
+        title2 = Title(f"Even-Mansour Differential Chosen-plaintext attack",font_size=50).set_color_by_gradient(BLUE,RED)
+
+        self.play(VGroup(idea1,idea2,idea3,surr).animate.next_to(rec2,RIGHT,buff=0),network.animate.shift(DOWN*2),FadeOut(VGroup(eq3,eq4)))
+        self.wait()
+
+        self.play(Write(title2))
+        self.wait()
+
+        self.play(FadeOut(title2),FadeOut(network))
+        self.wait()
+
+
+        pair1n = pair1.copy().next_to(pair1, UP, buff=0).shift( RIGHT*1.5)
+        vdots = MathTex(r"{{\vdots}}").set_color(ROSEWATER).scale(1.5).next_to(pair1n, DOWN, buff=0.25)
+        pair2n = MathTex(r"({{M}}_{{N}},{{Z}}_{{N}})").set_color(ROSEWATER).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).scale(1.5).set_color_by_tex("L",YELLOW).set_color_by_tex("N",SAPPHIRE).next_to(vdots, DOWN, buff=0.25)
+        known3n = MathTex(r"{{\Delta_M}},{{\Delta_{Z_1}}} {{\ldots}} {{\Delta_{Z_L}",substrings_to_isolate=["L","1"]).set_color(ROSEWATER).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).set_color_by_tex("W",RED).set_color_by_tex("L",YELLOW).set_color_by_tex("N",SAPPHIRE).scale(1.5).next_to(pair2n,DOWN,buff=0.25)
+        rec3= SurroundingRectangle(VGroup(pair1n,vdots,pair2n,known3n),color=MAUVE,stroke_width=3,buff=0.2/4)
+        #label2 = MathTex(r"Known:").set_color(MAUVE).next_to(rec3, UP, buff=0.1)
+
+        idea1n = idea1.copy().to_edge(UP).shift(LEFT*1.5)
+        idea2n = MathTex(r"{{F}}({{V'}}) {{\oplus}} {{F}}({{V'}} {{\oplus}} {{\Delta_M}}) \stackrel{?}{\in} \{ {{\Delta_{Z_1}}} \ldots {{\Delta_{Z_L}}} \}",substrings_to_isolate=["L","1"]).set_color(ROSEWATER).set_color_by_tex("F",PEACH).set_color_by_tex("V",GREEN).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).set_color_by_tex("\oplus",RED).scale(1.3).set_color_by_tex("L",YELLOW).set_color_by_tex("N",SAPPHIRE).next_to(idea1n, DOWN, buff=0.2)
+        idea3n = MathTex(r"{{E}}_{{K}}({{M}}_{{i}}) \stackrel{?}{=} {{Z}}_{{i}} , {{\forall}} {{i}} {{\in}} [1,{{N}}]").set_color(ROSEWATER).set_color_by_tex("E",RED).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).set_color_by_tex("K",BLUE).set_color_by_tex("i",MAUVE).set_color_by_tex("in",ROSEWATER).scale(1.3).set_color_by_tex("L",YELLOW).set_color_by_tex("N",SAPPHIRE).next_to(idea2n, DOWN, buff=0.2)
+        surr3 = SurroundingRectangle(VGroup(idea1n,idea2n,idea3n),color=RED,stroke_width=3,buff=0.2/4)
+
+        self.play(FadeOut(label),Transform(pair1,pair1n),Transform(pair2,VGroup(vdots,pair2n)),Transform(known3,known3n),Transform(rec,rec3),idea1.animate.move_to(idea1n),idea2.animate.move_to(idea2n),idea3.animate.move_to(idea3n),surr.animate.move_to(surr3))
         self.wait()
 
 
 
+        diagram = ImageMobject("diagram.png")
+        diagram.set(width=4)
+        diagram.to_corner(DR,buff=0.15)
 
-
-
-
-
+        self.play(FadeIn(diagram))
+        self.wait()
 
         
+        L_formula = MathTex(r"L = \frac{N\,(N - 1)}{2}").set_color(ROSEWATER).next_to(diagram, LEFT, buff=0.04)
 
+        L_formula[0][0].set_color(YELLOW)
+        VGroup(L_formula[0][2],L_formula[0][4]).set_color(SAPPHIRE)
+        self.play(Write(L_formula))
+        #self.add(index_labels(L_formula[0]))
+        self.wait()
 
+        self.play(Transform(idea1,idea1n),Transform(idea2,idea2n),Transform(idea3,idea3n),Transform(surr,surr3))
+        self.wait()
 
 class differentialTrails(Scene):
     def construct(self):
