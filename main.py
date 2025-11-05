@@ -985,11 +985,11 @@ class EvenMansourConstruction(Scene):
         self.play(FadeOut(title))
         self.wait()
 
-        eq1 = MathTex(r"{{\Delta_M}}={{M}}_1 {{\oplus}} {{M}}_1").set_color(ROSEWATER).set_color_by_tex("\oplus",RED).set_color_by_tex("M",TEAL).scale(1.5).to_edge(RIGHT,buff=0.5)
+        eq1 = MathTex(r"{{\Delta_M}}={{M}}_1 {{\oplus}} {{M}}_2").set_color(ROSEWATER).set_color_by_tex("\oplus",RED).set_color_by_tex("M",TEAL).scale(1.5).to_edge(RIGHT,buff=0.5)
         self.play(Write(eq1))
         self.wait()
 
-        eq2 = MathTex(r"{{\Delta_Z}}={{Z}}_2 {{\oplus}} {{Z}}_2").set_color(ROSEWATER).set_color_by_tex("\oplus",RED).set_color_by_tex("Z",RED).scale(1.5).next_to(eq1, DOWN, buff=0.25)
+        eq2 = MathTex(r"{{\Delta_Z}}={{Z}}_1 {{\oplus}} {{Z}}_2").set_color(ROSEWATER).set_color_by_tex("\oplus",RED).set_color_by_tex("Z",RED).scale(1.5).next_to(eq1, DOWN, buff=0.25)
         self.play(Write(eq2))
         self.wait()
 
@@ -1043,39 +1043,61 @@ class EvenMansourConstruction(Scene):
 
         pair1n = pair1.copy().next_to(pair1, UP, buff=0).shift( RIGHT*1.5)
         vdots = MathTex(r"{{\vdots}}").set_color(ROSEWATER).scale(1.5).next_to(pair1n, DOWN, buff=0.25)
-        pair2n = MathTex(r"({{M}}_{{N}},{{Z}}_{{N}})").set_color(ROSEWATER).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).scale(1.5).set_color_by_tex("L",YELLOW).set_color_by_tex("N",SAPPHIRE).next_to(vdots, DOWN, buff=0.25)
-        known3n = MathTex(r"{{\Delta_M}},{{\Delta_{Z_1}}} {{\ldots}} {{\Delta_{Z_L}",substrings_to_isolate=["L","1"]).set_color(ROSEWATER).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).set_color_by_tex("W",RED).set_color_by_tex("L",YELLOW).set_color_by_tex("N",SAPPHIRE).scale(1.5).next_to(pair2n,DOWN,buff=0.25)
+        pair2n = MathTex(r"({{M}}_{2{{N}}},{{Z}}_{2{{N}}})").set_color(ROSEWATER).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).scale(1.5).set_color_by_tex("L",YELLOW).set_color_by_tex("N",YELLOW).next_to(vdots, DOWN, buff=0.25)
+        known3n = MathTex(r"{{\Delta_M}},{{\Delta_{Z_1}}} {{\ldots}} {{\Delta_{Z_N}",substrings_to_isolate=["N","1"]).set_color(ROSEWATER).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).set_color_by_tex("W",RED).set_color_by_tex("L",YELLOW).set_color_by_tex("N",YELLOW).scale(1.5).next_to(pair2n,DOWN,buff=0.25)
         rec3= SurroundingRectangle(VGroup(pair1n,vdots,pair2n,known3n),color=MAUVE,stroke_width=3,buff=0.2/4)
         #label2 = MathTex(r"Known:").set_color(MAUVE).next_to(rec3, UP, buff=0.1)
 
         idea1n = idea1.copy().to_edge(UP).shift(LEFT*1.5)
-        idea2n = MathTex(r"{{F}}({{V'}}) {{\oplus}} {{F}}({{V'}} {{\oplus}} {{\Delta_M}}) \stackrel{?}{\in} \{ {{\Delta_{Z_1}}} \ldots {{\Delta_{Z_L}}} \}",substrings_to_isolate=["L","1"]).set_color(ROSEWATER).set_color_by_tex("F",PEACH).set_color_by_tex("V",GREEN).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).set_color_by_tex("\oplus",RED).scale(1.3).set_color_by_tex("L",YELLOW).set_color_by_tex("N",SAPPHIRE).next_to(idea1n, DOWN, buff=0.2)
-        idea3n = MathTex(r"{{E}}_{{K}}({{M}}_{{i}}) \stackrel{?}{=} {{Z}}_{{i}} , {{\forall}} {{i}} {{\in}} [1,{{N}}]").set_color(ROSEWATER).set_color_by_tex("E",RED).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).set_color_by_tex("K",BLUE).set_color_by_tex("i",MAUVE).set_color_by_tex("in",ROSEWATER).scale(1.3).set_color_by_tex("L",YELLOW).set_color_by_tex("N",SAPPHIRE).next_to(idea2n, DOWN, buff=0.2)
+        idea2n = MathTex(r"{{F}}({{V'}}) {{\oplus}} {{F}}({{V'}} {{\oplus}} {{\Delta_M}}) \stackrel{?}{\in} \{ {{\Delta_{Z_1}}} \ldots {{\Delta_{Z_N}}} \}",substrings_to_isolate=["N","1"]).set_color(ROSEWATER).set_color_by_tex("F",PEACH).set_color_by_tex("V",GREEN).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).set_color_by_tex("\oplus",RED).scale(1.3).set_color_by_tex("L",YELLOW).set_color_by_tex("N",YELLOW).next_to(idea1n, DOWN, buff=0.2)
+        idea3n = MathTex(r"{{E}}_{{K}}({{M}}_{{i}}) \stackrel{?}{=} {{Z}}_{{i}} , {{\forall}} {{i}} {{\in}} [1,2{{N}}]").set_color(ROSEWATER).set_color_by_tex("E",RED).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).set_color_by_tex("K",BLUE).set_color_by_tex("i",MAUVE).set_color_by_tex("in",ROSEWATER).scale(1.3).set_color_by_tex("L",YELLOW).set_color_by_tex("N",YELLOW).next_to(idea2n, DOWN, buff=0.2)
         surr3 = SurroundingRectangle(VGroup(idea1n,idea2n,idea3n),color=RED,stroke_width=3,buff=0.2/4)
 
         self.play(FadeOut(label),Transform(pair1,pair1n),Transform(pair2,VGroup(vdots,pair2n)),Transform(known3,known3n),Transform(rec,rec3),idea1.animate.move_to(idea1n),idea2.animate.move_to(idea2n),idea3.animate.move_to(idea3n),surr.animate.move_to(surr3))
         self.wait()
 
+        explanation1 = MathTex(r"{{\Delta_{Z_1}}} = {{Z}}_1 {{\oplus}} {{Z}}_2",substrings_to_isolate=["1"]).scale(1.5).set_color(ROSEWATER).set_color_by_tex("Z",RED).set_color_by_tex("N",YELLOW).set_color_by_tex("\oplus",RED).to_corner(DR,buff=1.5).shift(UP*1.8)
+        explanation2 = MathTex(r"{{\Delta_{Z_2}}} = {{Z}}_3 {{\oplus}} {{Z}}_4",substrings_to_isolate=["2"]).scale(1.5).set_color(ROSEWATER).set_color_by_tex("Z",RED).set_color_by_tex("N",YELLOW).set_color_by_tex("\oplus",RED).next_to(explanation1,DOWN,buff=0.25)
+        explanationVdots = MathTex(r"\vdots").scale(1.5).next_to(explanation2,DOWN,buff=0.25)
+        explanationN = MathTex(r"{{\Delta_{Z_N}}} = {{Z}}_{{{{2N-1}}}} \oplus {{Z}}_{2N}",substrings_to_isolate=["N"]).scale(1.5).set_color(ROSEWATER).set_color_by_tex("Z",RED).set_color_by_tex("\oplus",RED).set_color_by_tex("N",YELLOW).next_to(explanationVdots,DOWN,buff=0.25)
 
-
-        diagram = ImageMobject("diagram.png")
-        diagram.set(width=4)
-        diagram.to_corner(DR,buff=0.15)
-
-        self.play(FadeIn(diagram))
-        self.wait()
-
-        
-        L_formula = MathTex(r"L = \frac{N\,(N - 1)}{2}").set_color(ROSEWATER).next_to(diagram, LEFT, buff=0.04)
-
-        L_formula[0][0].set_color(YELLOW)
-        VGroup(L_formula[0][2],L_formula[0][4]).set_color(SAPPHIRE)
-        self.play(Write(L_formula))
-        #self.add(index_labels(L_formula[0]))
+        self.play(Write(explanation1),Write(explanation2),Write(explanationVdots),Write(explanationN))
         self.wait()
 
         self.play(Transform(idea1,idea1n),Transform(idea2,idea2n),Transform(idea3,idea3n),Transform(surr,surr3))
         self.wait()
+
+        #/*SHOW CODE */
+        self.play(FadeOut(VGroup(explanation1,explanation2,explanationVdots,explanationN)))
+        self.wait()
+
+        complexity = MathTex(r"\mathcal{O}(\frac{2^n}{N})").scale(1.5).to_corner(DR,buff=2.75).shift(0*UP ).set_color(ROSEWATER)
+        complexity[0][3].set_color(BLUE)
+        complexity[0][5].set_color(YELLOW)
+        #self.add(index_labels(complexity[0]))
+        self.play(Write(complexity))
+        self.wait()
+
+        spaceComplexity = MathTex(r"\mathcal{O}(2{{N}})").scale(1.5).set_color_by_tex("N",YELLOW).next_to(complexity,DOWN,buff=0.25)
+        self.play(Write(spaceComplexity))
+        self.wait()
+
+        Nval = MathTex(r"N = 2^{\frac{n}{2}}").scale(1.5).next_to(spaceComplexity,DOWN,buff=0.25)
+        Nval[0][-3].set_color(BLUE)
+        Nval[0][0].set_color(YELLOW)
+
+        self.play(Write(Nval))
+        self.wait()
+
+        complexity2 = MathTex(r"\mathcal{O}(2^{\frac{n}{2}})").scale(1.5).move_to(complexity).set_color(ROSEWATER)
+        complexity2[0][-4].set_color(BLUE)
+
+        spaceComplexity2 = MathTex(r"\mathcal{O}(2^{\frac{n}{2}})").scale(1.5).next_to(complexity,DOWN,buff=0.25)
+        spaceComplexity2[0][-4].set_color(BLUE)
+
+        self.play(Transform(complexity,complexity2),Transform(spaceComplexity,spaceComplexity2))
+        self.wait()
+
 
 class differentialTrails(Scene):
     def construct(self):
