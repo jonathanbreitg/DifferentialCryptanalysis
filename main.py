@@ -155,10 +155,11 @@ class PBox(VGroup):
             for i in range(n)
         ])
 
-        perm_lines = VGroup(*[
-            Line(top_points[i], bottom_points[perm[i]]).set_color([PEACH,TEAL] if bottom_points[perm[i]][0] >= top_points[i][0] else [TEAL,PEACH])
-            for i in range(n)
-        ])
+        perm_lines = VGroup()
+        for i in range(n):
+            line = Line(top_points[i], bottom_points[perm[i]])
+            line.set_sheen_direction((bottom_points[perm[i]] - top_points[i])/line.get_length()).set_color([TEAL,PEACH])
+            perm_lines.add(line)
 
         # Group everything
         if topLabels:
@@ -1135,6 +1136,7 @@ class ConfusionDiffusion(Scene):
         self.wait()
 
         mBits = Tex(r"0110 1110 0100 1101").set_color(TEAL).scale(1.25).move_to(msg)
+        mBitsOG = mBits.copy()
         self.play(ReplacementTransform(msg,mBits))
         self.wait()
 
@@ -1142,17 +1144,81 @@ class ConfusionDiffusion(Scene):
         self.play(Transform(output,zBits))
         self.wait()
 
+        
         arrBit = Arrow(mBits[0][-2].get_top()+UP+RIGHT,mBits[0][-2].get_top(),buff=buffy)
-        self.play(Write(arrBit))
+        arrBit.set_sheen_direction((mBits[0][-2].get_top() - mBits[0][-2].get_top()+UP+RIGHT)/(-1*(arrBit.get_length()+0)))
+        arrBit.set_color([RED,TEAL])
+        arrBit[1].set_color(TEAL)
+        self.play(Write(arrBit),Enc.animate.set_opacity(0.4),arr2.animate.set_opacity(0.4))
         self.wait()
 
         bitFlipped = Tex("0110 1110 0100 1111").set_color(RED).scale(1.25).move_to(mBits)
         bitFlipped[0][-2].set_color(RED)
         self.play(Transform(mBits[0][-2],bitFlipped[0][-2]))
         self.wait()
-
+        lines = VGroup()
         for out_bit in zBits[0]:
-            self.play(Write(Line(mBits[0][-2].get_bottom(),out_bit.get_top())))
+            line = Line(mBits[0][-2].get_bottom(),out_bit.get_top())
+            line.set_sheen_direction((out_bit.get_top()-mBits[0][-2].get_bottom())/line.get_length())
+            line.set_color_by_gradient([RED,"#1e1e2e00"])
+            lines.add(line)
+        self.play(Write(lines))
+        self.wait()
+
+        zBits2 = Tex(r"1100 0001 1000 0110").set_color(PEACH).scale(1.25).move_to(output)
+        zBits2[0][1].set_color(RED)
+        zBits2[0][2].set_color(RED)
+        zBits2[0][4].set_color(RED)
+        zBits2[0][7].set_color(RED)
+        zBits2[0][9].set_color(RED)
+        zBits2[0][11].set_color(RED)
+        zBits2[0][13:15].set_color(RED)
+        self.play(Transform(output,zBits2))
+        self.wait()
+
+        text = Tex("Avalanch \, Effect").set_color(ROSEWATER).next_to(zBits,DOWN,buff=0.25)
+        self.play(Write(text))
+        self.wait()
+
+        self.play(FadeOut(text))
+        self.wait()
+
+        self.play(FadeOut(lines),Transform(output,zBits),Transform(mBits[0][-2],mBitsOG[0][-2]),Enc.animate.set_opacity(1),arr2.animate.set_opacity(1))
+        self.wait()
+
+        xor = VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(TEXT,3),MathTex(r"{{\oplus}} {{K}}").set_color(TEXT).scale(1.25))
+        colorize(xor[1])
+        self.play(Transform(Enc,xor))
+        self.wait()
+
+        arrBit2 = Arrow(zBits[0][-2].get_bottom()+DOWN+RIGHT,zBits[0][-2].get_bottom(),buff=buffy)
+        arrBit.set_sheen_direction((arr2.get_end() - arr2.get_start())/(1*(arrBit2.get_length()+0)))
+        arrBit2.set_color([RED,PEACH])
+        arrBit2[1].set_color(PEACH)
+        self.play(Transform(mBits[0][-2],bitFlipped[0][-2]),Transform(output[0][-2],zBits2[0][-2]),Write(arrBit2))
+        self.wait()
+
+
+        mBits3 = Tex(r"0110111001001101").set_color(TEAL).scale(1.25).move_to(msg)
+        mBits3Flipped = Tex(r"0110111001001111").set_color(TEAL).scale(1.25).move_to(msg)
+        mBits3Flipped[0][-2].set_color(RED)
+
+        permuted = Tex(r"0101111111000001").set_color(PEACH).scale(1.25).move_to(output)
+
+        zBits3 = Tex(r"1010100011010000").set_color(PEACH).scale(1.25).move_to(output)
+
+        ONE = Tex(1).set_color(RED).scale(1.25)
+
+        arrBitTrans =  Arrow(mBits3[0][-2].get_top()+UP+RIGHT,mBits3[0][-2].get_top(),buff=buffy)
+        self.play(FadeOut(arrBit2),ReplacementTransform(mBits,mBits3),Transform(output,zBits3),arrBit.animate.move_to(arrBitTrans))
+        self.wait()
+
+        pbox = PBox(perm=[0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15],width=zBits3.get_width()+0.075,height=1.7,topLabels=False,bottomLabels=False)
+        self.play(Transform(Enc,pbox),FadeOut(arr),FadeOut(arr2),Transform(output,permuted))
+        self.wait()
+
+        ONE.move_to(permuted[0][11])
+        self.play(Transform(mBits3[0][-2],mBits3Flipped[0][-2]),Transform(output[0][11],ONE))
         self.wait()
 
 
