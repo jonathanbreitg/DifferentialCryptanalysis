@@ -1100,7 +1100,7 @@ class EvenMansourConstruction(Scene):
         self.wait()
 
 
-class ConfusionDiffusion(Scene):
+class Diffusion(Scene):
     def construct(self):
         buffy= 0.25/2
         image = ImageMobject("shannon.png")
@@ -1176,7 +1176,7 @@ class ConfusionDiffusion(Scene):
         self.play(Transform(output,zBits2))
         self.wait()
 
-        text = Tex("Avalanch \, Effect").set_color(ROSEWATER).next_to(zBits,DOWN,buff=0.25)
+        text = Tex("Avalanche \, Effect").set_color(ROSEWATER).next_to(zBits,DOWN,buff=0.25)
         self.play(Write(text))
         self.wait()
 
@@ -1200,6 +1200,7 @@ class ConfusionDiffusion(Scene):
 
 
         mBits3 = Tex(r"0110111001001101").set_color(TEAL).scale(1.25).move_to(msg)
+        mBits3Copy = mBits3.copy()
         mBits3Flipped = Tex(r"0110111001001111").set_color(TEAL).scale(1.25).move_to(msg)
         mBits3Flipped[0][-2].set_color(RED)
 
@@ -1214,13 +1215,134 @@ class ConfusionDiffusion(Scene):
         self.wait()
 
         pbox = PBox(perm=[0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15],width=zBits3.get_width()+0.075,height=1.7,topLabels=False,bottomLabels=False)
-        self.play(Transform(Enc,pbox),FadeOut(arr),FadeOut(arr2),Transform(output,permuted))
+        self.play(Transform(Enc,pbox),FadeOut(arr),FadeOut(arr2),ReplacementTransform(output,permuted))
         self.wait()
 
         ONE.move_to(permuted[0][11])
-        self.play(Transform(mBits3[0][-2],mBits3Flipped[0][-2]),Transform(output[0][11],ONE))
+        self.play(ReplacementTransform(mBits3[0][-2],mBits3Flipped[0][-2]),ReplacementTransform(permuted[0][11],ONE))
         self.wait()
 
+        sbox =  VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(TEXT,3),MathTex(r"{{S}}_{16}").set_color(TEXT).scale(1.25))
+        zBitsA = Tex(r"1010100011010000").set_color(PEACH).scale(1.25).move_to(output)
+        
+        self.play(ReplacementTransform(Enc,sbox),Write(arr),Write(arr2),ReplacementTransform(mBits3[0][-2],mBits3Copy[0][-2]),ReplacementTransform(ONE,permuted[0][11]),ReplacementTransform(permuted,zBitsA))
+        self.wait()
+
+        ONE_copy = Tex(1).set_color(RED).scale(1.25).move_to(mBits3[0][-2])
+        zBits4 = Tex(r"1100000110000110").set_color(PEACH).scale(1.25).move_to(output)
+        zBits4[0][1].set_color(RED)
+        zBits4[0][2].set_color(RED)
+        zBits4[0][4].set_color(RED)
+        zBits4[0][7].set_color(RED)
+        zBits4[0][9].set_color(RED)
+        zBits4[0][11].set_color(RED)
+        zBits4[0][13:15].set_color(RED)
+
+        lines = VGroup()
+        for i in range(16):
+            line = Line(mBits3Copy[0][-2].get_bottom(),zBitsA[0][i].get_top())
+            line.set_sheen_direction((zBitsA[0][i].get_top()-mBits3Copy[0][-2].get_bottom())/line.get_length())
+            line.set_color_by_gradient([RED,"#1e1e2e00"])
+            lines.add(line)
+        self.play(arr.animate.set_opacity(0.4),arr2.animate.set_opacity(0.4),sbox.animate.set_opacity(0.4),Write(lines))
+        self.wait()
+
+        self.play(Transform(mBits3Copy[0][-2],ONE_copy),Transform(zBitsA,zBits4))
+        self.wait()
+
+        self.play(FadeOut(lines),arr.animate.set_opacity(1),arr2.animate.set_opacity(1),sbox.animate.set_opacity(1))
+        self.wait()
+
+        #self.play(FadeOut(VGroup(sbox,arr,arr2,zBitsA,mBits3Copy,arrBit,output,zBits4,zBits,zBits2,z)))
+
+class Confusion(Scene):
+    def construct(self):
+            caeserBox = VGroup(Rectangle(width=2.5, height=1).set_fill(SURFACE0,opacity=1).set_stroke(TEXT,3),MathTex(r"CAESER").set_color(ROSEWATER))
+
+            msg = Tex("“ABCD”").set_color(TEAL).next_to(caeserBox,UP,buff=1)
+            out = Tex("“DEFG”").set_color(PEACH).next_to(caeserBox,DOWN,buff=1)
+            buffy = 0.5/4
+            arr1 = Arrow(msg.get_bottom(),caeserBox.get_top(),buff=buffy).set_color(TEAL)
+            arr2 = Arrow(caeserBox.get_bottom(),out.get_top(),buff=buffy).set_color(PEACH)
+
+            self.play(Write(VGroup(caeserBox,msg,out,arr1,arr2)))
+            self.wait()
+
+            longMessage1 = Text("“We're no strangers to love\nYou know the rules and so do I...”").set_color(TEAL).next_to(caeserBox,UP,buff=1)
+            self.play(Transform(msg,longMessage1),FadeOut(out))
+            self.wait()
+
+            from hists import plaintext,alphabet
+            #fullLyrics = Tex(f"{plaintext}").set_color(TEAL)
+            #fullLyrics.height = 0.5
+            #fullLyrics.width = config.frame_width - 1
+            #fullLyrics.move_to(msg).to_edge(LEFT,buff=1)
+            g = VGroup(arr1,arr2,caeserBox)
+            #/*ADD FULL TEXT OBVI*/
+            self.play(FadeOut(msg),g.animate.to_edge(LEFT,buff=1))
+            self.wait()
+
+            arr = Arrow(msg[0][0].get_top()+UP,msg[0][0].get_top(),buff=buffy).set_color(RED)
+            self.play(Write(arr))
+            labels = []
+            hist = {}
+            for letter in alphabet:
+                hist[letter] = 0
+                labels.append(letter)
+            y_range = list(range(3))
+            chart= BarChart(values=list(hist.values()),bar_colors=[RED,BLUE],y_range=[0,197,20],y_length=config.frame_height*0.7)
+            chart.width=config.frame_width*0.7
+            chart.to_corner(DR)
+
+            labs = VGroup()
+            for (idx,bar) in enumerate(chart.bars):
+                t=Text(alphabet[idx],font="Droid Sans Mono",font_size=40).set_color(bar.color)
+                t.shift(bar.get_top()+UP*0.1-t.get_bottom())
+                labs.add(t)
+
+            self.play(Write(chart),Write(labs))
+            for (index,letter) in enumerate(plaintext):
+                if letter in alphabet:
+                    hist[letter] += 1
+                    #self.play(chart.animate.change_bar_values(list(hist.values())),*[t.animate.shift(bar.get_top()+UP*0.1-t.get_bottom()) for t, bar in zip(labs, chart.bars)],runtime=0.05/40)
+            self.play(chart.animate.change_bar_values(list(hist.values())),*[t.animate.shift(bar.get_top()+UP*0.1-t.get_bottom()) for t, bar in zip(labs, chart.bars)],runtime=0.05/40)
+            self.play(*[t.animate.shift(bar.get_top()+UP*0.1-t.get_bottom()) for t, bar in zip(labs, chart.bars)])
+            self.wait()
+
+            stat = MathTex("{{S}}").scale(1.5).next_to(chart,UP,1.25).set_color_by_tex("S",ORANGE)
+            self.play(Write(stat))
+
+            hist2 = [0] * 26
+            for (i,letter) in enumerate(alphabet):
+                hist2[(i+3)%26] = hist[letter]
+
+
+            self.play(chart.animate.change_bar_values(hist2),*[t.animate.shift(chart.bars[(i+3)%26].get_bottom() - chart.bars[i].get_bottom()) for i,t in enumerate(labs)],runtime=2)
+            self.wait()
+
+            stat2 = MathTex("{{S}}_1").scale(1.5).move_to(stat).set_color_by_tex("S",ORANGE)
+            self.play(Transform(stat,stat2))
+            self.wait()
+
+            K = MathTex("{{K}}").scale(1.5).next_to(stat,LEFT,buff=1).set_color(BLUE)
+            rel = CurvedArrow(K.get_bottom()+DOWN*0.1,stat.get_bottom())
+            rel.set_sheen_direction((stat.get_bottom() - K.get_bottom())/rel.get_length()).set_color([BLUE,ORANGE])
+
+            self.play(Write(K),Write(rel))
+            self.wait()
+
+            rel2 = CurvedArrow(stat.get_top()+UP*0.1,K.get_top()+UP*0.1)
+            rel2.set_sheen_direction((stat.get_top() - K.get_top())/rel2.get_length()).set_color([BLUE,ORANGE])
+            self.play(Write(rel2))
+            self.wait()
+
+            perm = VGroup(Rectangle(width=2.5, height=1).set_fill(SURFACE0,opacity=1).set_stroke(TEXT,3),MathTex(r"PERM").set_color(ROSEWATER)).move_to(caeserBox)
+            self.play(Transform(caeserBox,perm),chart.animate.change_bar_values(list(hist.values())),*[t.animate.shift(chart.bars[(i)].get_bottom() - chart.bars[(i+3)%26].get_bottom()) for i,t in enumerate(labs)],runtime=2)
+            self.wait()
+
+            #/*SHOW SHANNON'S ORIGINAL DEF.*/
+
+            
 
 class differentialTrails(Scene):
     def construct(self):
