@@ -1352,7 +1352,7 @@ class differentialTrails(Scene):
         self.play(Write(m1),Write(m2))
         self.wait()
 
-        eq = MathTex(r"{{M}} {{\oplus}} {{M'}} = 4 {{\oplus}} F = B").set_color(TEAL).scale(1.5)
+        eq = MathTex(r"{{M}} {{\oplus}} {{M'}} = {{4}} {{\oplus}} {{F}} = {{B}}").set_color(ROSEWATER).set_color_by_tex("4",TEAL).set_color_by_tex("F",TEAL).set_color_by_tex("B",RED).scale(1.5)
         colorize(eq)
         self.play(Write(eq))
         self.wait()
@@ -1360,21 +1360,21 @@ class differentialTrails(Scene):
         self.play(FadeOut(eq))
         self.wait()
         
-        xor1 = VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(TEXT,3),MathTex(r"\oplus {{K_1}}").set_color(TEXT).scale(1.25)).next_to(m1, DOWN, buff=buffy)
+        xor1 = VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(TEXT,3),MathTex(r"\oplus {{K}}_1").set_color(TEXT).scale(1.25)).next_to(m1, DOWN, buff=buffy)
         colorize(xor1[1])
         arr1 = Arrow(start=m1.get_bottom(), end=xor1.get_top(), buff=0.1/2, color=TEAL)
 
         sbox1 = VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(TEXT,3),MathTex(r"S").set_color(TEXT).scale(1.5)).next_to(xor1, DOWN, buff=buffy)
         arr2 = Arrow(start=xor1.get_bottom(), end=sbox1.get_top(), buff=0.1/2, color=PEACH)
 
-        xor2 = VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(TEXT,3),MathTex(r"\oplus {{K_2}}").set_color(TEXT).scale(1.25)).next_to(sbox1, DOWN, buff=buffy)
+        xor2 = VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(TEXT,3),MathTex(r"\oplus {{K}}_2").set_color(TEXT).scale(1.25)).next_to(sbox1, DOWN, buff=buffy)
         colorize(xor2[1])
         arr3 = Arrow(start=sbox1.get_bottom(), end=xor2.get_top(), buff=0.1/2, color=YELLOW)
 
         sbox2 = VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(TEXT,3),MathTex(r"S").set_color(TEXT).scale(1.5)).next_to(xor2, DOWN, buff=buffy)
         arr4 = Arrow(start=xor2.get_bottom(), end=sbox2.get_top(), buff=0.1/2, color=PEACH)
 
-        xor3 = VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(TEXT,3),MathTex(r"\oplus {{K_3}}").set_color(TEXT).scale(1.25)).next_to(sbox2, DOWN, buff=buffy)
+        xor3 = VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(TEXT,3),MathTex(r"\oplus {{K}}_3").set_color(TEXT).scale(1.25)).next_to(sbox2, DOWN, buff=buffy)
         colorize(xor3[1])
         arr5 = Arrow(start=sbox2.get_bottom(), end=xor3.get_top(), buff=0.1/2, color=YELLOW)
         self.play(Write(xor1),Write(sbox1),Write(xor2),Write(sbox2),Write(xor3),Write(arr1),Write(arr2),Write(arr3),Write(arr4),Write(arr5))
@@ -1389,25 +1389,25 @@ class differentialTrails(Scene):
         colorize(dm)
         self.play(Write(dm))
         self.wait()
-        m3 = MathTex(r"B").set_color(RED).scale(1.5).move_to(m1.get_center()+(m2.get_center()-m1.get_center())/2)
+        m3 = MathTex(r"B").set_color(RED).scale(1.25).move_to(m1.get_center()+(m2.get_center()-m1.get_center())/2)
         self.play(Transform(dm,m3))
         self.wait()
 
-        xorb1 = VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(RED,4),MathTex(r"\oplus {{K_1}}").set_color(TEXT).scale(1.25)).next_to(m3, DOWN, buff=buffy)
+        xorb1 = VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(RED,3),MathTex(r"\oplus {{K}}_1").set_color(TEXT).scale(1.25)).next_to(m3, DOWN, buff=buffy)
         colorize(xorb1[1])
         arrb1 = Arrow(start=m3.get_bottom(), end=xorb1.get_top(), buff=0.1/2, color=TEAL)
 
-        sboxb1 = VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(RED,4),MathTex(r"S").set_color(TEXT).scale(1.5)).next_to(xorb1, DOWN, buff=buffy)
+        sboxb1 = VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(RED,3),MathTex(r"S").set_color(TEXT).scale(1.5)).next_to(xorb1, DOWN, buff=buffy)
         arrb2 = Arrow(start=xorb1.get_bottom(), end=sboxb1.get_top(), buff=0.1/2, color=PEACH)
 
-        xorb2 = VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(RED,4),MathTex(r"\oplus {{K_2}}").set_color(TEXT).scale(1.25)).next_to(sboxb1, DOWN, buff=buffy)
+        xorb2 = VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(RED,3),MathTex(r"\oplus {{K}}_2").set_color(TEXT).scale(1.25)).next_to(sboxb1, DOWN, buff=buffy)
         colorize(xorb2[1])
         arrb3 = Arrow(start=sboxb1.get_bottom(), end=xorb2.get_top(), buff=0.1/2, color=YELLOW)
 
-        sboxb2 = VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(RED,4),MathTex(r"S").set_color(TEXT).scale(1.5)).next_to(xorb2, DOWN, buff=buffy)
+        sboxb2 = VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(RED,3),MathTex(r"S").set_color(TEXT).scale(1.5)).next_to(xorb2, DOWN, buff=buffy)
         arrb4 = Arrow(start=xorb2.get_bottom(), end=sboxb2.get_top(), buff=0.1/2, color=PEACH)
 
-        xorb3 = VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(RED,4),MathTex(r"\oplus {{K_3}}").set_color(TEXT).scale(1.25)).next_to(sboxb2, DOWN, buff=buffy)
+        xorb3 = VGroup(Rectangle(width=2, height=1/1.5).set_fill(SURFACE0,opacity=1).set_stroke(RED,3),MathTex(r"\oplus {{K}}_3").set_color(TEXT).scale(1.25)).next_to(sboxb2, DOWN, buff=buffy)
         colorize(xorb3[1])
         arrb5 = Arrow(start=sboxb2.get_bottom(), end=xorb3.get_top(), buff=0.1/2, color=YELLOW)
 
@@ -1415,7 +1415,7 @@ class differentialTrails(Scene):
         self.wait()
 
         temp =VGroup(sboxb1,xorb2,sboxb2,xorb3,arrb3,arrb4,arrb5)
-        m3b = MathTex(r"B").set_color(RED).scale(1.5).move_to(sboxb1)
+        m3b = MathTex(r"B").set_color(RED).scale(1.25).move_to(sboxb1)
         self.play(FadeOut(temp))
         self.wait()
 
@@ -1425,7 +1425,7 @@ class differentialTrails(Scene):
         self.play(Wiggle(arr2),Wiggle(aaaa[5]),Circumscribe(arr2),Circumscribe(aaaa[5]))
         self.wait()
 
-        eq2 = MathTex(r"{{AddKey_K({{X}})}} {{\oplus}} {{AddKey_K({{X'}})}} {{=}} {{\Delta_x}}").set_color(MAUVE)
+        eq2 = MathTex(r"{{AddKey}}_{{K}}({{X}}) {{\oplus}} {{AddKey}}_{{K}}({{X'}}) {{=}} {{\Delta_x}}").set_color(MAUVE)
         colorize(eq2)
         self.play(Write(eq2),Wiggle(m3b,run_time=1.5))
         self.wait()
@@ -1435,11 +1435,11 @@ class differentialTrails(Scene):
         self.play(FadeOut(m3b),FadeIn(temp))
         self.wait()
 
-        m3b.scale(1/1.5).next_to(arrb2,LEFT,buff=0.5/2)
+        m3b.scale(1/1.25).next_to(arrb2,LEFT,buff=0.5/2)
         self.play(Write(m3b))
         self.wait()
 
-        self.play(Circumscribe(arrb3),Circumscribe(sboxb1))
+        self.play(FocusOn(VGroup(arrb3,sboxb1)))
         self.wait()
 
         #fade in editing later
@@ -1480,7 +1480,7 @@ class differentialTrails(Scene):
         # information (k, or the DDT characteristics) *
         # /
 
-        keyGuess = MathTex(r"{{K_3'}} = {{2}}").scale(1.5).set_color_by_tex("2",BLUE).move_to(m1.get_center()+(m3.get_center()-m1.get_center())/2 + DOWN*0.25)
+        keyGuess = MathTex(r"{{K}}_3' = {{2}}").scale(1.5).set_color_by_tex("2",BLUE).move_to(m1.get_center()+(m3.get_center()-m1.get_center())/2 + DOWN*0.25)
         colorize(keyGuess)
         self.play(Write(keyGuess),Write(SurroundingRectangle(keyGuess,color=BLUE,stroke_width=3)))
         self.wait()
@@ -1536,39 +1536,41 @@ class differentialTrails(Scene):
         Ops2 = MathTex(r"{{16}}").set_color_by_tex("16",RED).next_to(Ops1, RIGHT, buff=0.1)
         Ops3 = MathTex(r"= {{256}}").set_color_by_tex("256",PEACH).next_to(Ops2, RIGHT, buff=0.1)
 
-        self.play(Write(Ops1))
+        formal1 = MathTex(r"{{\#K}} \cdot ").set_color_by_tex("K",BLUE).move_to(Ops1).shift(DOWN*0.5)
+        formal2 = MathTex(r"{{\#M}}").set_color_by_tex("M",RED).next_to(formal1,RIGHT,buff=0.1)
+        self.play(Write(Ops1),Write(formal1))
         self.wait()
 
-        self.play(Write(Ops2))
+        self.play(Write(Ops2),Write(formal2))
         self.wait()
 
         self.play(Write(Ops3))
         self.wait()
 
-        self.play(FadeOut(VGroup(Ops1,Ops2,Ops3)))
+        self.play(FadeOut(VGroup(Ops1,Ops2,Ops3,formal2,formal1)))
         self.wait()
 
         table = Table(
-            [["Potential \\, {{K_3}}","\#"],
-             ["{{K_3'}}=0","0"],
-             ["{{K_3'}}=1","0"],
-             ["{{K_3'}}=2","1"],
-             ["{{K_3'}}=3","0"],
-             ["{{K_3'}}=4","0"],
-             ["{{K_3'}}=5","0"],
-             ["{{K_3'}}=6","0"],
-             ["{{K_3'}}=7","0"],
-             ["{{K_3'}}=8","0"],
-             ["{{K_3'}}=9","0"],
-             ["{{K_3'}}=A","0"],
-             ["{{K_3'}}=B","0"],
-             ["{{K_3'}}=C","0"],
-             ["{{K_3'}}=D","0"],
-             ["{{K_3'}}=E","0"],
-             ["{{K_3'}}=F","0"]],
+            [["Potential \\, {{K}}_3","\#"],
+             ["{{K}}_3'=0","0"],
+             ["{{K}}_3'=1","0"],
+             ["{{K}}_3'=2","1"],
+             ["{{K}}_3'=3","0"],
+             ["{{K}}_3'=4","0"],
+             ["{{K}}_3'=5","0"],
+             ["{{K}}_3'=6","0"],
+             ["{{K}}_3'=7","0"],
+             ["{{K}}_3'=8","0"],
+             ["{{K}}_3'=9","0"],
+             ["{{K}}_3'=A","0"],
+             ["{{K}}_3'=B","0"],
+             ["{{K}}_3'=C","0"],
+             ["{{K}}_3'=D","0"],
+             ["{{K}}_3'=E","0"],
+             ["{{K}}_3'=F","0"]],
             include_outer_lines=True,
             line_config={"stroke_color": TEXT, "stroke_width": 2},
-            element_to_mobject=lambda x: MathTex(x).set_color_by_tex("K",BLUE).scale(3),
+            element_to_mobject=lambda x: MathTex(x).set_color_by_tex("K",BLUE).scale(3.5),
         ).scale_to_fit_height(0.95*config.frame_height).to_edge(RIGHT,buff=buffy)
         self.play(Write(table))
         self.wait()
@@ -1579,26 +1581,26 @@ class differentialTrails(Scene):
         #/*SHOW CODE SNIPPET*/
 
         table2 = Table(
-            [["Potential \\, {{K_3}}","\#"],
-             ["{{K_3'}}=0","2"],
-             ["{{K_3'}}=1","2"],
-             ["{{K_3'}}=2","8"],
-             ["{{K_3'}}=3","4"],
-             ["{{K_3'}}=4","4"],
-             ["{{K_3'}}=5","2"],
-             ["{{K_3'}}=6","4"],
-             ["{{K_3'}}=7","4"],
-             ["{{K_3'}}=8","0"],
-             ["{{K_3'}}=9","0"],
-             ["{{K_3'}}=A","0"],
-             ["{{K_3'}}=B","2"],
-             ["{{K_3'}}=C","0"],
-             ["{{K_3'}}=D","0"],
-             ["{{K_3'}}=E","0"],
-             ["{{K_3'}}=F","0"]],
+            [["Potential \\, {{K}}_3'","\#"],
+             ["{{K}}_3'=0","2"],
+             ["{{K}}_3'=1","2"],
+             ["{{K}}_3'=2","8"],
+             ["{{K}}_3'=3","4"],
+             ["{{K}}_3'=4","4"],
+             ["{{K}}_3'=5","2"],
+             ["{{K}}_3'=6","4"],
+             ["{{K}}_3'=7","4"],
+             ["{{K}}_3'=8","0"],
+             ["{{K}}_3'=9","0"],
+             ["{{K}}_3'=A","0"],
+             ["{{K}}_3'=B","2"],
+             ["{{K}}_3'=C","0"],
+             ["{{K}}_3'=D","0"],
+             ["{{K}}_3'=E","0"],
+             ["{{K}}_3'=F","0"]],
             include_outer_lines=True,
             line_config={"stroke_color": TEXT, "stroke_width": 2},
-            element_to_mobject=lambda x: MathTex(x).set_color_by_tex("K",BLUE).scale(3),
+            element_to_mobject=lambda x: MathTex(x).set_color_by_tex("K",BLUE).scale(3.5),
         ).scale_to_fit_height(0.95*config.frame_height).move_to(table.get_center())
         table2.get_columns()[1].set_color(MAUVE)
         self.play(Transform(table,table2))
@@ -1613,7 +1615,7 @@ class differentialTrails(Scene):
         self.play(Write(prob))
         self.wait()
 
-        expected = MathTex(r"{{\mathbb{E}}}({{K_3'}}={{K_3}}) = 16 \cdot \frac{1}{2} = {{8}}").set_color(ROSEWATER).set_color_by_tex("8",MAUVE).scale(0.9).to_edge(LEFT,buff=0.1).shift(UP*0)
+        expected = MathTex(r"{{\mathbb{E}}}({{K}}_3'={{K}}_3) = 16 \cdot \frac{1}{2} = {{8}}").set_color(ROSEWATER).set_color_by_tex("8",MAUVE).scale(0.9).to_edge(LEFT,buff=0.1).shift(UP*0)
         colorize(expected)
         self.play(Write(expected))
         self.wait()
@@ -1621,7 +1623,7 @@ class differentialTrails(Scene):
         self.play(Circumscribe(table2.get_rows()[3]))
         self.wait()
 
-        expected2 = MathTex(r"{{\mathbb{E}}}({{K_3'}}{{\neq}}{{K_3}}) = {{2.125}}").set_color(ROSEWATER).set_color_by_tex("2.125",MAUVE).scale(0.9).to_edge(LEFT,buff=0.1).shift(UP*(-2))
+        expected2 = MathTex(r"{{\mathbb{E}}}({{K}}_3'{{\neq}}{{K}}_3) = {{2.125}}").set_color(ROSEWATER).set_color_by_tex("2.125",MAUVE).scale(0.9).to_edge(LEFT,buff=0.1).shift(UP*(-2))
         colorize(expected2)
         self.play(Write(expected2))
         self.wait()
