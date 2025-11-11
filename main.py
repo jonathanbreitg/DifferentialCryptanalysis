@@ -27,7 +27,7 @@ class XorBox(VGroup):
 
         # Input labels above top points
         labels_top = VGroup(*[
-            MathTex(rf"{eval(top_pfx)}",r"{{{'}}}",rf"_{{{i+offset}}}").next_to(top_points[i], UP, buff=0.3).set_color(TEAL).set_opacity_by_tex("'",0).set_opacity_by_tex(eval(top_pfx),1).scale(0.7)
+            MathTex(rf"{eval(top_pfx)}",rf"_{{{i+offset}}}").next_to(top_points[i], UP, buff=0.3).set_color(TEAL).set_opacity_by_tex("'",0).set_opacity_by_tex(eval(top_pfx),1).scale(0.7)
             for i in range(n)
         ])
         top_lines = VGroup(*[
@@ -38,7 +38,7 @@ class XorBox(VGroup):
 
         # Output labels below bottom points
         labels_bottom = VGroup(*[
-            MathTex(rf"{eval(bot_pfx)}",r"{{{'}}}",rf"_{{{i+offset}}}").next_to(bottom_points[i], DOWN, buff=0.3).set_opacity_by_tex("'",0).set_opacity_by_tex(eval(bot_pfx),1).set_color(PEACH).scale(0.7)
+            MathTex(rf"{eval(bot_pfx)}",rf"_{{{i+offset}}}").next_to(bottom_points[i], DOWN, buff=0.3).set_opacity_by_tex("'",0).set_opacity_by_tex(eval(bot_pfx),1).set_color(PEACH).scale(0.7)
             for i in range(n)
         ])
         bottom_lines = VGroup(*[
@@ -83,7 +83,7 @@ class SBox(VGroup):
 
         # Input labels above top points
         labels_top = VGroup(*[
-            MathTex(f"{eval(top_pfx)}",r"{{{'}}}",rf"_{{{i}}}").next_to(top_points[i], UP, buff=0.3).set_color(TEAL).set_opacity_by_tex("'",0).set_opacity_by_tex(eval(top_pfx),1).scale(0.7)
+            MathTex(f"{eval(top_pfx)}",rf"_{{{i}}}").next_to(top_points[i], UP, buff=0.3).set_color(TEAL).set_opacity_by_tex("'",0).set_opacity_by_tex(eval(top_pfx),1).scale(0.7)
             for i in range(n)
         ])
         top_lines = VGroup(*[
@@ -93,7 +93,7 @@ class SBox(VGroup):
 
         # Output labels below bottom points
         labels_bottom = VGroup(*[
-            MathTex(f"{eval(bot_pfx)}",r"{{{'}}}",rf"_{{{i}}}").next_to(bottom_points[i], DOWN, buff=0.3).set_color(PEACH).set_opacity_by_tex("'",0).set_opacity_by_tex(eval(bot_pfx),1).scale(0.7)
+            MathTex(f"{eval(bot_pfx)}",rf"_{{{i}}}").next_to(bottom_points[i], DOWN, buff=0.3).set_color(PEACH).set_opacity_by_tex("'",0).set_opacity_by_tex(eval(bot_pfx),1).scale(0.7)
             for i in range(n)
         ])
         bottom_lines = VGroup(*[
@@ -135,7 +135,7 @@ class PBox(VGroup):
 
         # Input labels above top points
         if bit_labels is None:
-            bit_labels = [f"{eval(top_pfx)}"+r"{{{'}}}"+rf"_{{{i}}}" for i in range(n)]
+            bit_labels = [f"{eval(top_pfx)}"+rf"_{{{i}}}" for i in range(n)]
         labels_top = VGroup(*[
             MathTex(label).next_to(top_points[i], UP, buff=0.3).set_color(TEAL).scale(0.7*txScale).set_opacity_by_tex("'",0).set_opacity_by_tex(eval(top_pfx),1)
             for i, label in enumerate(bit_labels)
@@ -147,7 +147,7 @@ class PBox(VGroup):
 
         # Output labels below bottom points
         labels_bottom = VGroup(*[
-            MathTex(f"{eval(bot_pfx)}",r"{{{'}}}",rf"_{{{i}}}").next_to(bottom_points[perm[i]] if permute else bottom_points[i], DOWN, buff=0.3).set_color(PEACH).scale(0.7*txScale).set_opacity_by_tex("'",0).set_opacity_by_tex(eval(bot_pfx),1)
+            MathTex(f"{eval(bot_pfx)}",rf"_{{{i}}}").next_to(bottom_points[perm[i]] if permute else bottom_points[i], DOWN, buff=0.3).set_color(PEACH).scale(0.7*txScale).set_opacity_by_tex("'",0).set_opacity_by_tex(eval(bot_pfx),1)
             for i in range(n)
         ])
         bottom_lines = VGroup(*[
@@ -191,50 +191,59 @@ def colorize(line):
 
 class OTPScene(Scene):
     def construct(self):
-        title = Title("XOR | AddKey",font_size=50).set_color_by_gradient(BLUE,RED)
+        title = Title("XOR",font_size=50).set_color_by_gradient(BLUE,RED)
         self.play(Write(title))
         self.wait()
 
-        eq1 = MathTex(r"{{X}} = {{M}} \oplus {{K}}")
+        eq1 = MathTex(r"{{X}} = {{M}} {{\oplus}} {{K}}").scale(1.5)
         colorize(eq1)
         self.play(Write(eq1))
         self.wait()
 
-        eq2 = MathTex(r"{{0}} = {{A}} \oplus {{A}}").next_to(eq1,DOWN,buff=0.5)
+        eq2 = MathTex(r"{{0}} = {{A}} {{\oplus}} {{A}}").scale(1.5).next_to(eq1,DOWN,buff=0.5)
         colorize(eq2)
         self.play(Write(eq2))
         self.wait()
 
-        eq3 = MathTex(r"{{A}} = {{0}} \oplus {{A}}").next_to(eq2,DOWN)
+        eq3 = MathTex(r"{{A}} = {{0}} {{\oplus}} {{A}}").scale(1.5).next_to(eq2,DOWN)
         colorize(eq3)
         self.play(Write(eq3))
         self.wait()
 
         self.play(VGroup(eq2,eq3).animate.to_edge(LEFT))
 
-        eq4 = MathTex(r"{{M}} = {{X}} \oplus {{K}}").next_to(eq1,DOWN)
+        eq4 = MathTex(r"{{M}} = {{X}} \oplus {{K}}").scale(1.5).next_to(eq1,DOWN)
         colorize(eq4)
         self.play(Write(eq4))
 
-        eq5 = MathTex(r"{{M}} = {{M}} \oplus {{K}} \oplus {{K}}").next_to(eq1,DOWN)
+        eq5 = MathTex(r"{{M}} = {{M}} \oplus {{K}} \oplus {{K}}").scale(1.5).next_to(eq1,DOWN)
         colorize(eq5)
-        self.play(Transform(eq4,eq5),Circumscribe(eq1))
+        self.play(Indicate(eq1))
         self.wait()
 
-        eq6 = MathTex(r"{{M}} = {{M}} \oplus {{0}}").next_to(eq1,DOWN)
+        self.play(Transform(eq4,eq5))
+        self.wait()
+
+        eq6 = MathTex(r"{{M}} = {{M}} \oplus {{0}}").scale(1.5).next_to(eq1,DOWN)
         colorize(eq6)
-        self.play(Transform(eq4,eq6),Circumscribe(eq2))
+        self.play(Indicate(eq2))
         self.wait()
 
-        eq7 = MathTex(r"{{M}} = {{M}}").next_to(eq1,DOWN)
+        self.play(Transform(eq4,eq6))
+        self.wait()
+
+        eq7 = MathTex(r"{{M}} = {{M}}").scale(1.5).next_to(eq1,DOWN)
         colorize(eq7)
-        self.play(Transform(eq4,eq7),Circumscribe(eq3))
+        self.play(Indicate(eq3))
+        self.wait()
+
+        self.play(Transform(eq4,eq7))
         self.wait()
 
         self.play(FadeOut(eq4))
         self.wait()
 
-        eq8 = MathTex(r"{{AddKey}}_{{K}}(M) = {{M}} \oplus {{K}} = {{X}}").next_to(eq1,DOWN,buff=0.5)
+        eq8 = MathTex(r"{{AddKey}}_{{K}}({{M}}) = {{M}} {{\oplus}} {{K}} = {{X}}").scale(1.5).next_to(eq1,UP,buff=0.5)
         colorize(eq8)
         self.play(Write(eq8))
         self.wait()
@@ -390,8 +399,8 @@ class PboxScene(Scene):
         self.play(Write(arrow2), Write(output_bits))
         self.wait()
 
-        pbox = PBox(perm=[0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15],width=12,height=4)
-        self.play(FadeOut(VGroup(opaque_text,input_bits,output_bits,arrow1,arrow2)),Write(pbox))
+        pbox = PBox(perm=[0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15],width=12,height=4).shift(DOWN)
+        self.play(FadeOut(VGroup(opaque_box,opaque_text,input_bits,output_bits,arrow1,arrow2)),Write(pbox))
         self.wait()
 
 class SPNDiagram(Scene):
@@ -428,10 +437,8 @@ class SPNDiagram(Scene):
         #totGroup.scale(0.6)
         #totGroup2 = totGroup.copy()
         #totGroup2.to_edge(RIGHT,buff=0)
-        self.play(totGroup.animate.scale(0.55))
-        self.wait()
 
-        xorBoxB = XorBox(offset=0,top_pfx='f"m\'"',bot_pfx='f"x\'"').move_to(ORIGIN+UP*1.5)
+        xorBoxB = XorBox(offset=0,top_pfx='f"m\'"',bot_pfx='f"x\'"').move_to(xorBox)
 
         leftLabelB = MathTex(rf"K").next_to(xorBoxB.get_left(), LEFT, buff=0.25).set_color(BLUE)
         leftLineB = Arrow(leftLabelB.get_right(), xorBoxB.get_left(),buff=0).set_color(BLUE)
@@ -441,12 +448,16 @@ class SPNDiagram(Scene):
         sbox3B = SBox(offset=8  ,topLabels=False,bot_pfx='f"y\'"').next_to(sbox2B, RIGHT, buff=0)
         sbox4B = SBox(offset=12 ,topLabels=False,bot_pfx='f"y\'"').next_to(sbox3B, RIGHT, buff=0)
 
-        sgroupB = VGroup(sbox1B,sbox2B,sbox3B,sbox4B).next_to(xorBoxB, DOWN, buff=0)
-        pboxB = PBox(perm=[0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15],topLabels=False,bot_pfx='f"z\'"',top_pfx='f"y"',height=1.5,permute=False).next_to(sgroupB, DOWN, buff=0)
+        sgroupB = VGroup(sbox1B,sbox2B,sbox3B,sbox4B).next_to(xorBoxB,DOWN,buff=0)#.move_to(sgroup)#.to_edge(RIGHT,buff=0)
+        pboxB = PBox(perm=[0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15],topLabels=False,bot_pfx='f"z\'"',top_pfx='f"y"',height=1.5,permute=False).next_to(sgroupB,DOWN,buff=0.0)#.move_to(pbox)#.to_edge(RIGHT,buff=0)
 
         totGroup2 = VGroup(sgroupB,pboxB,xorBoxB,leftLabelB,leftLineB)#.shift(UP*0.1)
-        totGroup2.scale(0.55)
-        totGroup2.to_edge(RIGHT,buff=0)
+        totGroup2.scale(0.52)
+        totGroup2.to_edge(RIGHT,buff=0.25).shift(UP*0.25)
+
+        self.play(totGroup.animate.scale(0.55))
+        self.wait()
+
         self.play(totGroup.animate.to_edge(LEFT,buff=0))
         dashed_line = DashedLine(start=ORIGIN+UP*2.5+RIGHT*0.03, end=ORIGIN+DOWN*3.5+RIGHT*0.03, stroke_color=TEXT)
         self.play(Write(totGroup2),Write(dashed_line))
@@ -457,8 +468,8 @@ class SPNDiagram(Scene):
         self.play(Write(lab1),Write(lab2))
         self.wait()
 
-        lab1Out = MathTex(r"z").scale(2).next_to(totGroup.get_bottom(), DOWN, buff=0.3).set_color(PEACH)
-        lab2Out = MathTex(r"z'").scale(2).next_to(totGroup2.get_bottom(), DOWN, buff=0.3).set_color(PEACH)
+        lab1Out = MathTex(r"z").scale(2).move_to(lab1).to_edge(DOWN,buff=0.5).set_color(PEACH)
+        lab2Out = MathTex(r"z'").scale(2).move_to(lab2).to_edge(DOWN,buff=0.5).set_color(PEACH)
         self.play(Transform(lab1,lab1Out),Transform(lab2,lab2Out))
         self.wait()
 
@@ -635,8 +646,8 @@ class SboxMath(Scene):
         arrow1 = Arrow(start=lab1.get_bottom(), end=sbox.get_top()-UP*0.1, buff=0.1, color=TEAL)
         arrow2 = Arrow(start=lab2.get_bottom(), end=sbox2.get_top()-UP*0.1, buff=0.1, color=TEAL)
         #position xorLabel between lab1 and lab2
-        xorLabel = MathTex(r" \oplus ").set_color(RED).scale(1.5).move_to((lab1.get_right() + lab2.get_left()) / 2)
-        eqLabel = MathTex(r"= B" ).scale(1.5).next_to(lab2, RIGHT, buff=1).set_color(TEAL)
+        xorLabel = MathTex(r" {{\oplus}} ").set_color(RED).scale(1.5).move_to((lab1.get_right() + lab2.get_left()) / 2)
+        eqLabel = MathTex(r"= {{B}}" ).set_color(ROSEWATER).scale(1.5).next_to(lab2, RIGHT, buff=1).set_color_by_tex("B",TEAL)
 
         self.play(Write(lab1), Write(lab2))
         self.wait()
@@ -659,7 +670,7 @@ class SboxMath(Scene):
         self.wait()
 
         labOutXor = MathTex(r" \oplus ").set_color(RED).scale(1.5).move_to((lab1Out.get_right() + lab2Out.get_left()) / 2)
-        eqOutLabel = MathTex(r"= 2" ).scale(1.5).next_to(lab2Out, RIGHT, buff=1).set_color(PEACH)
+        eqOutLabel = MathTex(r"= {{2}}" ).scale(1.5).next_to(lab2Out, RIGHT, buff=1).set_color(ROSEWATER).set_color_by_tex("2",PEACH)
 
         self.play(Write(labOutXor),Write(eqOutLabel))
         self.wait()
@@ -670,7 +681,7 @@ class SboxMath(Scene):
         lab3Out = MathTex(r"2").scale(1.5).next_to(sbox.get_bottom(), DOWN, buff=0.6).set_color(PEACH)
         lab4Out = MathTex(r"7").scale(1.5).next_to(sbox2.get_bottom(), DOWN, buff=0.6).set_color(PEACH)
 
-        eqOutLabel2 = MathTex(r"= 5" ).scale(1.5).next_to(lab4Out, RIGHT, buff=1).set_color(PEACH)
+        eqOutLabel2 = MathTex(r"= {{5}}" ).scale(1.5).move_to(eqLabel).set_color(ROSEWATER).set_color_by_tex("5",PEACH)
         self.play(Transform(lab1,lab3),Transform(lab2,lab4),Transform(lab1Out,lab3Out),Transform(lab2Out,lab4Out),Transform(eqOutLabel,eqOutLabel2),Circumscribe(table2.get_columns()[4]),Circumscribe(table2.get_columns()[15]))
         self.wait()
 
@@ -678,8 +689,8 @@ class SboxMath(Scene):
         colorize(formula1)
         self.play(Write(formula1))
 
-        disclaimer = MathTex(r"{{When}} \,\,{{\Delta_x = B}}").next_to(formula1,DOWN).set_color(TEAL)
-        formula2 = MathTex(r"{{\Delta_y}} = 2 {{,}} 5 {{,}} 7 {{,}} D {{,}} F").next_to(disclaimer,DOWN).set_color(PEACH)
+        disclaimer = MathTex(r"{{When}} \,\,{{\Delta_x}} = {{B}}").next_to(formula1,DOWN).set_color(ROSEWATER).set_color_by_tex("B",TEAL).set_color_by_tex("\Delta_x",TEAL)
+        formula2 = MathTex(r"{{\Delta_y}} {{=}} 2 {{,}} 5 {{,}} 7 {{,}} D {{,}} F").next_to(disclaimer,DOWN).set_color(PEACH).set_color_by_tex("=",ROSEWATER)
         colorize(formula2)
         colorize(disclaimer)
         self.play(Write(disclaimer))
@@ -690,8 +701,7 @@ class SboxMath(Scene):
 
         self.play(FadeOut(VGroup(sbox,sbox2,lab1,lab2,lab1Out,lab2Out,arrow1,arrow2,arrow1Out,arrow2Out,xorLabel,eqLabel,labOutXor,eqOutLabel)))
         eqGroup = VGroup(formula1,disclaimer,formula2)
-        self.play(eqGroup.animate.to_edge(LEFT))
-        self.wait()
+
 
         #Create DDT
         ddt_data = [
@@ -730,9 +740,8 @@ class SboxMath(Scene):
         brace = Brace(ddt.get_columns()[0], direction=LEFT, buff=0.3, stroke_color=TEAL).set_color(TEAL)
         braceText = MathTex(r"\Delta_x").set_color(TEAL).next_to(brace, LEFT, buff=0.1)
         brace2 = Brace(ddt.get_rows()[0], direction=UP, buff=0.2/4, stroke_color=PEACH).set_color(PEACH)
-        braceText2 = MathTex(r"\#{{\Delta_y}}").set_color(PEACH).next_to(brace2, UP, buff=0.1/4)
+        braceText2 = MathTex(r"\#{{\Delta_y}}").set_color(ROSEWATER).set_color_by_tex("Delta_y",PEACH).next_to(brace2, UP, buff=0.1/6)
         colorize(braceText)
-        colorize(braceText2)
         self.play(Write(brace), Write(braceText))
         self.wait()
 
@@ -745,10 +754,10 @@ class SboxMath(Scene):
         self.play(Circumscribe(ddt.get_rows()[12]))
         self.wait()
 
-        self.play(Circumscribe(ddt.get_cell((13,4))))
+        self.play(FocusOn(ddt.get_cell((13,4))))
         self.wait()
 
-        self.play(Circumscribe(ddt.get_cell((2,2))))
+        self.play(FocusOn(ddt.get_cell((2,2))))
         self.wait()
 
         self.play(ddt.animate.to_edge(RIGHT,buff=0))
@@ -1010,18 +1019,19 @@ class EvenMansourConstruction(Scene):
 
         self.play(FadeOut(VGroup(eq1,eq2)))
         self.wait()
-
-        idea1 = MathTex(r"Generate \, all:({{V'}},{{V'}} {{\oplus}} {{\Delta_M}})").set_color(ROSEWATER).set_color_by_tex("V",GREEN).set_color_by_tex("M",TEAL).set_color_by_tex("\oplus",RED).scale(1.3).shift(UP*1.75+RIGHT*2.8)
-        self.play(Write(idea1),network.animate.to_edge(UP,buff=0.2))
+        idea1 = MathTex(r"({{V'}},{{V'}} {{\oplus}} {{\Delta_M}})").set_color(ROSEWATER).set_color_by_tex("V",GREEN).set_color_by_tex("M",TEAL).set_color_by_tex("\oplus",RED).scale(1.3).shift(UP*1.75).to_edge(RIGHT)
+        idea0  = Text("Generate all:",font_size=30,font='Hack').next_to(idea1,LEFT,buff=0.1).set_color(ROSEWATER)
+        ogIdea0 = idea0.copy()
+        self.play(Write(idea0),Write(idea1),network.animate.to_edge(UP,buff=0.2))
         self.wait()
 
-        idea2 = MathTex(r"{{F}}({{V'}}) {{\oplus}} {{F}}({{V'}} {{\oplus}} {{\Delta_M}}) \stackrel{?}{=} {{\Delta_Z}}").set_color(ROSEWATER).set_color_by_tex("F",PEACH).set_color_by_tex("V",GREEN).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).set_color_by_tex("\oplus",RED).scale(1.3).next_to(idea1, DOWN, buff=0.2)
-        surr = SurroundingRectangle(VGroup(idea1,idea2),color=RED,stroke_width=3,buff=0.1)
+        idea2 = MathTex(r"{{F}}({{V'}}) {{\oplus}} {{F}}({{V'}} {{\oplus}} {{\Delta_M}}) \stackrel{?}{=} {{\Delta_Z}}").set_color(ROSEWATER).set_color_by_tex("F",PEACH).set_color_by_tex("V",GREEN).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).set_color_by_tex("\oplus",RED).scale(1.3).next_to(idea1, DOWN, buff=0.2).to_edge(RIGHT)
+        surr = SurroundingRectangle(VGroup(idea0,idea1,idea2),color=RED,stroke_width=3,buff=0.1)
         self.play(Write(idea2),Write(surr))
         self.wait()
 
         idea3 = MathTex(r"{{E}}_{{K}}({{M}}_2) \stackrel{?}{=} {{Z}}_2 {{\land}} \ldots").set_color(ROSEWATER).set_color_by_tex("E",RED).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).set_color_by_tex("K",BLUE).scale(1.3).next_to(idea2, DOWN, buff=0.2)
-        surr2 = SurroundingRectangle(VGroup(idea1,idea2,idea3),color=RED,stroke_width=3,buff=0.1)
+        surr2 = SurroundingRectangle(VGroup(idea0,idea1,idea2,idea3),color=RED,stroke_width=3,buff=0.1)
         self.play(Write(idea3),Transform(surr,surr2))
         self.wait()
 
@@ -1032,7 +1042,7 @@ class EvenMansourConstruction(Scene):
 
         title2 = Title(f"Even-Mansour Differential Chosen-plaintext attack",font_size=50).set_color_by_gradient(BLUE,RED)
 
-        self.play(VGroup(idea1,idea2,idea3,surr).animate.next_to(rec2,RIGHT,buff=0),network.animate.shift(DOWN*2),FadeOut(VGroup(eq3,eq4)))
+        self.play(VGroup(idea0,idea1,idea2,idea3,surr).animate.next_to(rec2,RIGHT,buff=0),network.animate.shift(DOWN*2),FadeOut(VGroup(eq3,eq4)))
         self.wait()
 
         self.play(Write(title2))
@@ -1049,12 +1059,14 @@ class EvenMansourConstruction(Scene):
         rec3= SurroundingRectangle(VGroup(pair1n,vdots,pair2n,known3n),color=MAUVE,stroke_width=3,buff=0.2/4)
         #label2 = MathTex(r"Known:").set_color(MAUVE).next_to(rec3, UP, buff=0.1)
 
-        idea1n = idea1.copy().to_edge(UP).shift(LEFT*1.5)
-        idea2n = MathTex(r"{{F}}({{V'}}) {{\oplus}} {{F}}({{V'}} {{\oplus}} {{\Delta_M}}) \stackrel{?}{\in} \{ {{\Delta_{Z_1}}} \ldots {{\Delta_{Z_N}}} \}",substrings_to_isolate=["N","1"]).set_color(ROSEWATER).set_color_by_tex("F",PEACH).set_color_by_tex("V",GREEN).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).set_color_by_tex("\oplus",RED).scale(1.3).set_color_by_tex("L",YELLOW).set_color_by_tex("N",YELLOW).next_to(idea1n, DOWN, buff=0.2)
+        idea0n = idea0.copy().to_edge(UP)
+        idea1n = idea1.copy().next_to(idea0n,RIGHT,buff=0.1)
+        idea2n = MathTex(r"{{F}}({{V'}}) {{\oplus}} {{F}}({{V'}} {{\oplus}} {{\Delta_M}}) \stackrel{?}{\in} \{ {{\Delta_{Z_1}}} \ldots {{\Delta_{Z_N}}} \}",substrings_to_isolate=["N","1"]).set_color(ROSEWATER).set_color_by_tex("F",PEACH).set_color_by_tex("V",GREEN).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).set_color_by_tex("\oplus",RED).scale(1.3).set_color_by_tex("L",YELLOW).set_color_by_tex("N",YELLOW).next_to(VGroup(idea0n,idea1n),DOWN,buff=0.2).to_edge(RIGHT,buff=0.25)
         idea3n = MathTex(r"{{E}}_{{K}}({{M}}_{{i}}) \stackrel{?}{=} {{Z}}_{{i}} , {{\forall}} {{i}} {{\in}} [1,2{{N}}]").set_color(ROSEWATER).set_color_by_tex("E",RED).set_color_by_tex("M",TEAL).set_color_by_tex("Z",RED).set_color_by_tex("K",BLUE).set_color_by_tex("i",MAUVE).set_color_by_tex("in",ROSEWATER).scale(1.3).set_color_by_tex("L",YELLOW).set_color_by_tex("N",YELLOW).next_to(idea2n, DOWN, buff=0.2)
-        surr3 = SurroundingRectangle(VGroup(idea1n,idea2n,idea3n),color=RED,stroke_width=3,buff=0.2/4)
-
-        self.play(FadeOut(label),Transform(pair1,pair1n),Transform(pair2,VGroup(vdots,pair2n)),Transform(known3,known3n),Transform(rec,rec3),idea1.animate.move_to(idea1n),idea2.animate.move_to(idea2n),idea3.animate.move_to(idea3n),surr.animate.move_to(surr3))
+        surr3 = SurroundingRectangle(VGroup(idea0n,idea1n,idea2n,idea3n),color=RED,stroke_width=3,buff=0.2/4)
+        VGroup(idea0n,idea1n).next_to(idea2n,UP,buff=0.2)
+        #self.play(idea0.animate.move_to(idea0n),idea1.animate.move_to(idea1n),idea2.animate.move_to(idea2n),idea3.animate.move_to(idea3n),surr.animate.move_to(surr3))
+        self.play(FadeOut(label),Transform(pair1,pair1n),Transform(pair2,VGroup(vdots,pair2n)),Transform(known3,known3n),Transform(rec,rec3),idea0.animate.move_to(idea0n),idea1.animate.move_to(idea1n),idea2.animate.move_to(idea2n),idea3.animate.move_to(idea3n),surr.animate.move_to(surr3))
         self.wait()
 
         explanation1 = MathTex(r"{{\Delta_{Z_1}}} = {{Z}}_1 {{\oplus}} {{Z}}_2",substrings_to_isolate=["1"]).scale(1.5).set_color(ROSEWATER).set_color_by_tex("Z",RED).set_color_by_tex("N",YELLOW).set_color_by_tex("\oplus",RED).to_corner(DR,buff=1.5).shift(UP*1.8)
@@ -1065,14 +1077,14 @@ class EvenMansourConstruction(Scene):
         self.play(Write(explanation1),Write(explanation2),Write(explanationVdots),Write(explanationN))
         self.wait()
 
-        self.play(Transform(idea1,idea1n),Transform(idea2,idea2n),Transform(idea3,idea3n),Transform(surr,surr3))
+        self.play(Transform(idea0,idea0n),Transform(idea1,idea1n),Transform(idea2,idea2n),Transform(idea3,idea3n),Transform(surr,surr3))
         self.wait()
 
         #/*SHOW CODE */
         self.play(FadeOut(VGroup(explanation1,explanation2,explanationVdots,explanationN)))
         self.wait()
 
-        complexity = MathTex(r"\mathcal{O}(\frac{2^n}{N})").scale(1.5).to_corner(DR,buff=2.75).shift(0*UP ).set_color(ROSEWATER)
+        complexity = MathTex(r"\mathcal{O}(\frac{2^n}{N})").scale(1.5).to_corner(DR,buff=2.55).shift(0*UP ).set_color(ROSEWATER)
         complexity[0][3].set_color(BLUE)
         complexity[0][5].set_color(YELLOW)
         #self.add(index_labels(complexity[0]))
@@ -1107,7 +1119,7 @@ class Diffusion(Scene):
         image.set(width=4)
         image.to_edge(LEFT)
 
-        title = title = Title(f"Confusion \& Diffusion",font_size=50).set_color_by_gradient(BLUE,RED)
+        title  = Title(f"Confusion \& Diffusion",font_size=50).set_color_by_gradient(BLUE,RED)
         self.play(Write(title))
         self.wait()
 
@@ -1628,6 +1640,10 @@ class differentialTrails(Scene):
         self.play(Write(expected2))
         self.wait()
 
+class longTrail(Scene):
+    def construct(self):
+        pass
+
 class proofExpectedVal(Scene):
     def construct(self):
         ddt_data = [
@@ -1661,20 +1677,20 @@ class proofExpectedVal(Scene):
         self.play(Write(ddt))
         self.wait()
 
-        expected = MathTex(r"{{\mathbb{E}}}({{K_3'}}{{\neq}}{{K_3}}) = ").set_color(ROSEWATER).scale(0.8).to_edge(LEFT,buff=0.1)
+        expected = MathTex(r"{{\mathbb{E}}}({{K}}_3'{{\neq}}{{K}}_3) = ").set_color(ROSEWATER).scale(0.8).to_edge(LEFT,buff=0.1)
         colorize(expected)
         self.play(Write(expected))
         self.wait()
 
-        eight = MathTex(r"{{8}}").set_color(RED).next_to(expected,RIGHT,buff=0.1)
+        eight = MathTex(r"{{8}} {{\cdot}}").set_color_by_tex("8",RED).next_to(expected,RIGHT,buff=0.1)
         self.play(Write(eight))
         self.wait()
         
         self.play(Circumscribe(ddt.get_rows()[3]))
         self.wait()
 
-        prob = MathTex(r"\cdot (\frac{6}{16}").set_color(PEACH).scale(0.8).next_to(eight,RIGHT,buff=0.1)
-        colorize(prob)
+        prob = MathTex(r"(\frac{6}{16}").set_color(PEACH).scale(0.8).next_to(eight,RIGHT,buff=0.1)
+        #colorize(prob)
         self.play(Write(prob))
         self.wait()
         
@@ -1714,7 +1730,7 @@ class proofExpectedVal(Scene):
         self.wait()
         
 
-        #/*NERD NOTE, you can actually calculate the probability of getting an input diff of 2 more exactly but i'll leave that as an exercise for the viewer*/
+        #/*NERD NOTE, you can actually calculate the probability of getting an input diff of 2 more exactly by seperating out the cases in which Delta_x != 2 further into the possible inputs according to the DDT but i'll leave that as an exercise for the viewer*/
         
 
 
