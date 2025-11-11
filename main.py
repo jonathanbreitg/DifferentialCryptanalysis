@@ -2,7 +2,8 @@ from manim import *
 from pallete import *
 
 
-
+def gradientify(obj: VMobject,mul=1.0):
+    obj.set_sheen_direction(mul*(obj.get_end() - obj.get_start())/obj.get_length())
 
 class XorBox(VGroup):
     def __init__(self,topLabels=True,bottomLabels=True,offset=0,top_pfx='f"m"',bot_pfx='f"x"', **kwargs):
@@ -262,9 +263,13 @@ class SubBox(Scene):
         sbox_group = VGroup(sbox,sbox_text)
 
         bitstring = Tex("1011 1100 0110 1001").set_color(TEAL).next_to(sbox_group,UP,buff=1)
-        arrow1 = Arrow(start=bitstring.get_bottom(), end=sbox_group.get_top()-UP*0.1, buff=0.1, color=TEXT)
+        arrow1 = Arrow(start=bitstring.get_bottom(), end=sbox_group.get_top(), buff=0.1)
+        
+        arrow1.set_color(TEAL)
         bitstringOut = Tex("0110 1011 1000 0010").set_color(PEACH).next_to(sbox_group,DOWN,buff=1)
-        arrow2 = Arrow(start=sbox_group.get_bottom()+DOWN*0.1, end=bitstringOut.get_top(), buff=0.1, color=TEXT)
+        arrow2 = Arrow(start=sbox_group.get_bottom(), end=bitstringOut.get_top(), buff=0.1)
+        
+        arrow2.set_color(PEACH)
         g = VGroup(bitstring, arrow1, sbox_group, arrow2, bitstringOut)
         self.play(Write(bitstring), GrowFromCenter(sbox_group), Write(arrow1))
         self.play(Wiggle(sbox_group,run_time=1.5))
@@ -329,9 +334,9 @@ class SubBox(Scene):
         self.wait()
 
         bitstr = Tex("1001").set_color(TEAL).next_to(sbox_group,UP,buff=1)
-        arrow1b = Arrow(start=bitstr.get_bottom(), end=sbox_group.get_top()-UP*0.1, buff=0.1, color=TEXT)
+        arrow1b = Arrow(start=bitstr.get_bottom(), end=sbox_group.get_top(), buff=0.1, color=TEAL)
         bitstrOut = Tex("1010").set_color(PEACH).next_to(sbox_group,DOWN,buff=1)
-        arrow2b = Arrow(start=sbox_group.get_bottom()+DOWN*0.1, end=bitstrOut.get_top(), buff=0.1, color=TEXT)
+        arrow2b = Arrow(start=sbox_group.get_bottom(), end=bitstrOut.get_top(), buff=0.1, color=PEACH)
         gb = VGroup(bitstr, arrow1b, sbox_group, arrow2b, bitstrOut)
         self.play(Write(bitstr),Write(arrow1b))
         self.play(Wiggle(sbox_group,run_time=1.5),Write(arrow2b), Write(bitstrOut))
@@ -350,7 +355,7 @@ class SubBox(Scene):
         table2 = Table(table_data2, 
                       include_outer_lines=True,
                       line_config={"stroke_color": TEXT, "stroke_width": 2}, #color input in peach and output in teal
-                        element_to_mobject=lambda x: Tex(x).set_color(TEXT),
+                        element_to_mobject=lambda x: Tex(x).set_color(TEXT).scale(1),
                         ).scale(0.4)
         table2.get_rows()[0].set_color(TEAL)
         table2.get_rows()[1].set_color(PEACH)
@@ -367,8 +372,7 @@ class SubBox(Scene):
         self.wait()
 
         self.play(FadeOut(gb))
-        self.play( lookupText2.animate.move_to(ORIGIN+UP),table2.animate.scale(1.4))
-        self.play(table2.animate.to_edge(LEFT,buff=0))
+        self.play(lookupText2.animate.move_to(ORIGIN+UP),table2.animate.scale_to_fit_width(config.frame_width).to_edge(LEFT,buff=0))
         self.wait()
 
         label = Tex("S-box of DES").set_color(ROSEWATER).move_to(lookupText2)
@@ -1397,8 +1401,7 @@ class differentialTrails(Scene):
         self.play(Write(aaaa)) #Write(Line(aaaa,xor3.get_bottom()))
         self.wait()
 
-        dm = MathTex(r"{{\Delta_m}} = B").set_color(RED).scale(1.5).move_to(m1.get_center()+(m2.get_center()-m1.get_center())/2)
-        colorize(dm)
+        dm = MathTex(r"{{\Delta_m}} = {{B}}").set_color(ROSEWATER).set_color_by_tex("\Delta_m",RED).set_color_by_tex("B",RED).scale(1.5).move_to(m1.get_center()+(m2.get_center()-m1.get_center())/2)
         self.play(Write(dm))
         self.wait()
         m3 = MathTex(r"B").set_color(RED).scale(1.25).move_to(m1.get_center()+(m2.get_center()-m1.get_center())/2)
