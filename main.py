@@ -681,7 +681,7 @@ class SboxMath(Scene):
         lab3Out = MathTex(r"2").scale(1.5).next_to(sbox.get_bottom(), DOWN, buff=0.6).set_color(PEACH)
         lab4Out = MathTex(r"7").scale(1.5).next_to(sbox2.get_bottom(), DOWN, buff=0.6).set_color(PEACH)
 
-        eqOutLabel2 = MathTex(r"= {{5}}" ).scale(1.5).move_to(eqLabel).set_color(ROSEWATER).set_color_by_tex("5",PEACH)
+        eqOutLabel2 = MathTex(r"= {{5}}" ).scale(1.5).move_to(eqOutLabel).set_color(ROSEWATER).set_color_by_tex("5",PEACH)
         self.play(Transform(lab1,lab3),Transform(lab2,lab4),Transform(lab1Out,lab3Out),Transform(lab2Out,lab4Out),Transform(eqOutLabel,eqOutLabel2),Circumscribe(table2.get_columns()[4]),Circumscribe(table2.get_columns()[15]))
         self.wait()
 
@@ -739,8 +739,8 @@ class SboxMath(Scene):
 
         brace = Brace(ddt.get_columns()[0], direction=LEFT, buff=0.3, stroke_color=TEAL).set_color(TEAL)
         braceText = MathTex(r"\Delta_x").set_color(TEAL).next_to(brace, LEFT, buff=0.1)
-        brace2 = Brace(ddt.get_rows()[0], direction=UP, buff=0.2/4, stroke_color=PEACH).set_color(PEACH)
-        braceText2 = MathTex(r"\#{{\Delta_y}}").set_color(ROSEWATER).set_color_by_tex("Delta_y",PEACH).next_to(brace2, UP, buff=0.1/6)
+        brace2 = Brace(ddt.get_rows()[0], direction=UP, buff=0.2/6, stroke_color=PEACH).set_color(PEACH)
+        braceText2 = MathTex(r"\#{{\Delta_y}}").set_color(ROSEWATER).set_color_by_tex("Delta_y",PEACH).next_to(brace2, UP, buff=0.1/12)
         colorize(braceText)
         self.play(Write(brace), Write(braceText))
         self.wait()
@@ -754,10 +754,10 @@ class SboxMath(Scene):
         self.play(Circumscribe(ddt.get_rows()[12]))
         self.wait()
 
-        self.play(FocusOn(ddt.get_cell((13,4))))
+        self.play(FocusOn(ddt.get_cell((13,4)).get_center_of_mass()))
         self.wait()
 
-        self.play(FocusOn(ddt.get_cell((2,2))))
+        self.play(FocusOn(ddt.get_cell((2,2)).get_center_of_mass()))
         self.wait()
 
         self.play(ddt.animate.to_edge(RIGHT,buff=0))
